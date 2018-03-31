@@ -1,4 +1,4 @@
-<div *ngIf="sub; else choose">
+<div *ngIf="listSub; else choose">
   <div *ngBusy="list" class="page">
     <div class="header">
       <div>
@@ -35,7 +35,7 @@
       </li>
       <form class="task" (ngSubmit)="addTask()" [ngClass]="{'due': newTask.due, 'completed': newTask.completed}">
         <div class="task-dot" *ngIf="newTask">
-          <div class="dot" (click)="newTask.completed = !newTask.completed">
+          <div class="dot" (click)="completeNewTask()">
             <div class="completed-mark"></div>
           </div>
         </div>

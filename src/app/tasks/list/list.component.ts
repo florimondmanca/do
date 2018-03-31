@@ -13,16 +13,17 @@ import { ListService } from '../task.service';
 export class ListComponent implements OnInit, OnDestroy {
 
   list: List;
-  sub: any;
+  listSub: any;
+  addTaskSub: any;
   Arr = Array;
   newTask: Task = new Task();
 
   @Input() set listId(id: number) {
     if (id) {
-      if (this.sub) {
-        this.sub.unsubscribe();
+      if (this.listSub) {
+        this.listSub.unsubscribe();
       }
-      this.sub = this.listService.get(id).subscribe(
+      this.listSub = this.listService.get(id).subscribe(
         list => this.list = list
       );
     }
@@ -34,14 +35,30 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   addTask() {
-    // TODO POST to backend
-    this.list.tasks.push(this.newTask);
-    this.newTask = new Task();
+    this.addTaskSub = this.listService.addTask(this.list.id, this.newTask).subscribe(
+      task => {
+        this.list.tasks.push(task);
+        this.newTask = new Task();
+        this.addTaskSub.unsubscribe();
+        this.addTaskSub = null;
+      },
+      error => console.log(error)
+    );
+  }
+
+  completeNewTask() {
+    if (this.newTask.title) {
+      this.newTask.completed = !this.newTask.completed;
+      this.addTask();
+    }
   }
 
   ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe();
+    if (this.listSub) {
+      this.listSub.unsubscribe();
+    }
+    if (this.addTaskSub) {
+      this.addTaskSub.unsubscribe();
     }
   }
 
