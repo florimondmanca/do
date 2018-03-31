@@ -1,5 +1,6 @@
 export class Task {
   id: number;
+  listId: number;
   title: string;
   dueDate: Date;
   completed: boolean;
@@ -7,6 +8,7 @@ export class Task {
 
   constructor(options?: {
     id?: number,
+    listId?: number,
     title?: string,
     dueDate?: Date,
     completed?: boolean,
@@ -14,6 +16,7 @@ export class Task {
   }) {
     options = options || {};
     this.id = options.id;
+    this.listId = options.listId;
     this.title = options.title || '';
     this.dueDate = options.dueDate;
     this.completed = options.completed || false;

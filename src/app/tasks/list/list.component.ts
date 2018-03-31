@@ -46,6 +46,13 @@ export class ListComponent implements OnInit, OnDestroy {
     );
   }
 
+  updateTask(task: Task) {
+    this.listService.updateTask(task).subscribe(
+      task => console.log('task updated'),
+      error => console.log(error)
+    );
+  }
+
   completeNewTask() {
     if (this.newTask.title) {
       this.newTask.completed = !this.newTask.completed;

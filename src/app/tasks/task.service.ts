@@ -26,6 +26,7 @@ export class ListService {
   adaptTaskIn(item: any): Task {
     return new Task({
       id: item.id,
+      listId: item.list_id,
       title: item.title,
       dueDate: item.due_date ? new Date(item.due_date) : null,
       completed: item.completed,
@@ -33,13 +34,20 @@ export class ListService {
     });
   }
 
-  adaptTaskOut(task: Task): any {
+  adaptTaskCreate(task: Task): any {
     return {
       title: task.title,
+      list_id: task.listId,
       due_date: task.dueDate ? task.dueDate.toISOString() : null,
       completed: task.completed,
       priority: task.priority,
     };
+  }
+
+  adaptTaskUpdate(task: Task): any {
+    const data: any = this.adaptTaskCreate(task);
+    data.id = task.id;
+    return data;
   }
 
   // Actions
@@ -60,10 +68,17 @@ export class ListService {
   }
 
   addTask(id: number, task: Task): Observable<Task> {
-    const url = this.baseUrl + `tasks/${id}`;
-    const data = this.adaptTaskOut(task);
+    const url = this.baseUrl + `tasks/`;
+    task.listId = id;
+    const data = this.adaptTaskCreate(task);
     return this.http.post<Task>(url, data).pipe(
       map((item: any) => this.adaptTaskIn(item))
     );
+  }
+
+  updateTask(task: Task) {
+    const url = this.baseUrl + `tasks/${task.id}`;
+    const data = this.adaptTaskCreate(task);
+    return this.http.put(url, data);
   }
 }

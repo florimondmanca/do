@@ -1,5 +1,7 @@
 <div *ngIf="listSub; else choose">
   <div *ngBusy="list" class="page">
+
+    <!-- Header -->
     <div class="header">
       <div>
         <h2>{{ list.title }}</h2>
@@ -14,8 +16,12 @@
         <a href="#">Show</a>
       </div>
     </div>
+
+    <!-- List of tasks -->
     <ul id="tasks">
-      <li *ngFor="let task of list.tasks" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
+
+      <!-- Pre-existing tasks -->
+      <form *ngFor="let task of list.tasks" (ngSubmit)="updateTask(task)" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
         <div class="task-dot">
           <div class="dot" (click)="task.completed = !task.completed">
             <div class="completed-mark"></div>
@@ -26,13 +32,15 @@
             <span class="priority">
               <span *ngTimes="task.priority">!</span>
             </span>
-            {{ task.title }}
+            <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focusout)="updateTask(task)">
           </div>
           <div *ngIf="task.dueDate" class="due-date">
             {{ task.dueDate | amCalendar }}
           </div>
         </div>
-      </li>
+      </form>
+
+      <!-- New task -->
       <form class="task" (ngSubmit)="addTask()" [ngClass]="{'due': newTask.due, 'completed': newTask.completed}">
         <div class="task-dot" *ngIf="newTask">
           <div class="dot" (click)="completeNewTask()">
@@ -40,7 +48,7 @@
           </div>
         </div>
         <div class="task-body">
-          <input id="new-task" type="text" name="title" placeholder="Add task…" [(ngModel)]="newTask.title" autocomplete="off">
+          <input class="edit-task" type="text" name="title" placeholder="Add task…" [(ngModel)]="newTask.title" autocomplete="off">
         </div>
       </form>
     </ul>
