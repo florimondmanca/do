@@ -1,0 +1,35 @@
+@import '~sass/variables';
+@import '~sass/mixins';
+
+.page {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr;
+  height: 100vh;
+}
+
+#search-bar {
+  margin: 1em;
+}
+
+#lists {
+  background: $color-darker;
+  color: white;
+  height: 100%;
+  position: relative;
+  ul {
+    @include list-no-style;
+    li {
+      cursor: pointer;
+      padding: .7em 1em;
+      &.active {
+        background: $color-primary !important;
+      }
+      &:hover {
+        background: $color-medium;
+      }
+    }
+  }
+}

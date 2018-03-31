@@ -1,0 +1,53 @@
+<div *ngIf="sub; else choose">
+  <div *ngBusy="list" class="page">
+    <div class="header">
+      <div>
+        <h2>{{ list.title }}</h2>
+      </div>
+      <div>
+        <button type="button" name="add-task">+</button>
+      </div>
+    </div>
+    <div class="header">
+      <p>{{ list.completedCount }} completed</p>
+      <div>
+        <a href="#">Show</a>
+      </div>
+    </div>
+    <ul id="tasks">
+      <li *ngFor="let task of list.tasks" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
+        <div class="task-dot">
+          <div class="dot" (click)="task.completed = !task.completed">
+            <div class="completed-mark"></div>
+          </div>
+        </div>
+        <div class="task-body">
+          <div>
+            <span class="priority">
+              <span *ngTimes="task.priority">!</span>
+            </span>
+            {{ task.title }}
+          </div>
+          <div *ngIf="task.dueDate" class="due-date">
+            {{ task.dueDate | amCalendar }}
+          </div>
+        </div>
+      </li>
+      <form class="task" (ngSubmit)="addTask()" [ngClass]="{'due': newTask.due, 'completed': newTask.completed}">
+        <div class="task-dot" *ngIf="newTask">
+          <div class="dot" (click)="newTask.completed = !newTask.completed">
+            <div class="completed-mark"></div>
+          </div>
+        </div>
+        <div class="task-body">
+          <input id="new-task" type="text" name="title" placeholder="Add task…" [(ngModel)]="newTask.title" autocomplete="off">
+        </div>
+      </form>
+    </ul>
+  </div>
+</div>
+<ng-template #choose>
+  <div class="choose">
+    Let's get started! Select a list in the sidebar.
+  </div>
+</ng-template>

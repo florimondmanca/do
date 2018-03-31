@@ -1,0 +1,107 @@
+@import '~sass/variables';
+@import '~sass/mixins';
+
+.page {
+  padding: 1em;
+}
+
+#tasks {
+  @include list-no-style;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task {
+  padding: 0.6em 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  &::before {
+    display: block;
+    position: absolute;
+    content: '';
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid $color-light;
+    width: 100%;
+    height: 0;
+  }
+
+  .task-body {
+    height: 2em;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+
+  .due-date {
+    font-size: small;
+    color: $color-medium;
+  }
+
+  &.due .due-date {
+    color: $color-primary;
+  }
+
+  &.completed {
+    .completed-mark {
+      background: $color-success;
+    }
+  }
+
+  .priority {
+    color: $color-primary;
+  }
+
+  #new-task {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.task-dot {
+  height: 100%;
+  @include center-content;
+}
+$size: 1em;
+
+.dot {
+  display: block;
+  position: relative;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  margin: auto 1em;
+  border: 1px solid $color-light;
+  cursor: pointer;
+}
+
+.completed-mark {
+  $s: $size * .6;
+  position: absolute;
+  top: ($size - $s)/2;
+  left: ($size - $s)/2;
+  width: $s;
+  height: $s;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.choose {
+  @include center-content;
+  color: $color-medium;
+}

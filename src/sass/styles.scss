@@ -1,0 +1,26 @@
+@import '~sass/variables';
+
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,700');
+
+body {
+  font-family: 'Fira Sans', Arial, sans-serif;
+  color: $color-text;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: $color-secondary;
+  position: relative;
+  &:hover {
+    &::after {
+      position: absolute;
+      content: '';
+      bottom: -0.2em;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid $color-secondary;
+    }
+  }
+}
