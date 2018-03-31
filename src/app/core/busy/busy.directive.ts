@@ -17,7 +17,7 @@ import { BusyComponent } from './busy.component';
 @Directive({ selector: '[ngBusy]'})
 export class BusyDirective implements OnChanges {
 
-  @Input('ngBusy') data;
+  @Input('ngBusy') busy;
   private busyRef: ComponentRef<BusyComponent>;
 
   constructor(
@@ -28,9 +28,10 @@ export class BusyDirective implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.data) {
-      if (changes.data.currentValue) {
-        // New, non-empty data has arrived!
+    const busy: SimpleChange = changes.busy;
+    if (busy) {
+      if (!busy.currentValue) {
+        // The busy signal turned false
         if (this.busyRef) {
           this.busyRef.destroy();
           this.busyRef = null;
@@ -38,8 +39,8 @@ export class BusyDirective implements OnChanges {
         this.viewContainer.clear();
         this.viewContainer.createEmbeddedView(this.templateRef);
       }
-      else if (!changes.data.currentValue && !this.busyRef) {
-        // Empty data, go busy
+      else if (busy.currentValue && !this.busyRef) {
+        // The busy signal turned true, go busy
         this.createBusy();
       }
     }

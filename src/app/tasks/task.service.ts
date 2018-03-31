@@ -67,18 +67,21 @@ export class ListService {
     );
   }
 
-  addTask(id: number, task: Task): Observable<Task> {
+  create(id: number, task: Task): Observable<Task> {
     const url = this.baseUrl + `tasks/`;
     task.listId = id;
     const data = this.adaptTaskCreate(task);
     return this.http.post<Task>(url, data).pipe(
-      map((item: any) => this.adaptTaskIn(item))
+      map((item: any) => this.adaptTaskIn(item)),
+      tap(resp => console.log('created task')),
     );
   }
 
-  updateTask(task: Task) {
+  update(task: Task) {
     const url = this.baseUrl + `tasks/${task.id}`;
-    const data = this.adaptTaskCreate(task);
-    return this.http.put(url, data);
+    const data = this.adaptTaskUpdate(task);
+    return this.http.patch(url, data).pipe(
+      tap(resp => console.log('updated task')),
+    );
   }
 }

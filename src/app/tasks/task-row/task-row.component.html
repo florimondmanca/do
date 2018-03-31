@@ -1,0 +1,29 @@
+<form (ngSubmit)="onSubmit()" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
+
+  <!-- Completion dot widget -->
+  <div class="task-dot">
+    <div class="dot" (click)="onComplete()">
+      <div class="completed-mark"></div>
+    </div>
+  </div>
+
+  <!-- Main task info -->
+  <div class="task-body">
+    <div>
+      <!-- Priority: represent by the corresponding amount of "!" -->
+      <span class="priority"><span *ngTimes="task.priority">!</span></span>
+
+      <!-- Editable task title -->
+      <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focusout)="onFocusOut()" [placeholder]="placeholder">
+
+      <!-- Show busy if the subscription is active -->
+      <span *ngBusy="sub"></span>
+    </div>
+
+    <!-- Due date -->
+    <div *ngIf="task.dueDate" class="due-date">
+      {{ task.dueDate | amCalendar }}
+    </div>
+
+  </div>
+</form>

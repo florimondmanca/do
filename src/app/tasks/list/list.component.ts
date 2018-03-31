@@ -13,60 +13,42 @@ import { ListService } from '../task.service';
 export class ListComponent implements OnInit, OnDestroy {
 
   list: List;
-  listSub: any;
-  addTaskSub: any;
+  sub: any;
   Arr = Array;
   newTask: Task = new Task();
 
   @Input() set listId(id: number) {
     if (id) {
-      if (this.listSub) {
-        this.listSub.unsubscribe();
-      }
-      this.listSub = this.listService.get(id).subscribe(
-        list => this.list = list
+      this.clearSub();
+      this.sub = this.listService.get(id).subscribe(
+        list => {
+          this.list = list;
+          this.clearSub();
+        },
+        error => {
+          console.log(error);
+          this.clearSub();
+        }
       );
     }
   }
 
   constructor(private listService: ListService) { }
 
+  clearSub() {
+    if (this.sub) this.sub.unsubscribe();
+    this.sub = null;
+  }
+
   ngOnInit() {
   }
 
-  addTask() {
-    this.addTaskSub = this.listService.addTask(this.list.id, this.newTask).subscribe(
-      task => {
-        this.list.tasks.push(task);
-        this.newTask = new Task();
-        this.addTaskSub.unsubscribe();
-        this.addTaskSub = null;
-      },
-      error => console.log(error)
-    );
-  }
-
-  updateTask(task: Task) {
-    this.listService.updateTask(task).subscribe(
-      task => console.log('task updated'),
-      error => console.log(error)
-    );
-  }
-
-  completeNewTask() {
-    if (this.newTask.title) {
-      this.newTask.completed = !this.newTask.completed;
-      this.addTask();
-    }
+  registerCreated(task: Task) {
+    this.list.tasks.push(task);
   }
 
   ngOnDestroy() {
-    if (this.listSub) {
-      this.listSub.unsubscribe();
-    }
-    if (this.addTaskSub) {
-      this.addTaskSub.unsubscribe();
-    }
+    this.clearSub();
   }
 
 }
