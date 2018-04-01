@@ -7,6 +7,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { BusyComponent, BusyDirective } from './busy';
 import { TimesDirective } from './times.directive';
+import { DiffService } from './diff.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TimesDirective } from './times.directive';
     AngularFontAwesomeModule,
   ],
   providers: [
+    DiffService,
   ],
   exports: [
     BusyDirective,

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../task.model';
 import { ListService } from '../task.service';
+import { DiffService } from '@app/core';
 
 @Component({
   selector: 'app-task-row',
@@ -14,7 +15,10 @@ export class TaskRowComponent implements OnInit, OnDestroy {
 
   sub: any;
 
-  constructor(protected listService: ListService) { }
+  constructor(
+    protected listService: ListService,
+    private diffService: DiffService,
+  ) { }
 
   ngOnInit() {
   }
@@ -55,6 +59,19 @@ export class TaskRowComponent implements OnInit, OnDestroy {
 
   onSubmit() { this.update(); }
 
-  onFocusOut() { this.update(); }
+  onFocus() {
+    this.diffService.set(this.task);
+  }
+
+  _onFocusOut() {
+    if (this.diffService.hasChanged(this.task)) {
+      this.onFocusOut();
+    }
+    this.diffService.unset();
+  }
+
+  onFocusOut() {
+    this.update();
+  }
 
 }
