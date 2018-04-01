@@ -1,31 +1,31 @@
 import {
-  Component, OnInit, OnDestroy, Input,
-  ViewChild, ViewContainerRef, ComponentRef,
-  ComponentFactoryResolver, ComponentFactory,
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
 } from '@angular/core';
-import { AngularFontAwesomeComponent as faComponent } from 'angular-font-awesome';
-import { Observable, Subscription } from 'rxjs';
+import {
+  Observable,
+  Subscription
+} from 'rxjs';
 
 @Component({
   selector: 'app-busy-success',
   templateUrl: './busy-success.component.html',
-  styleUrls: ['./busy-success.component.scss']
+  styleUrls: ['./busy-success.component.scss'],
 })
 export class BusySuccessComponent implements OnInit, OnDestroy {
 
   @Input() killAfter: number;
   @Input() busy: any;
   @Input() createInitial: boolean = false;
-  @ViewChild('container', { read: ViewContainerRef }) container;
-  componentRef: ComponentRef<faComponent>;
-  factory: ComponentFactory<faComponent>;
   killSub: Subscription;
+  visible: boolean = false;
 
-  constructor(private resolver: ComponentFactoryResolver) { }
+  constructor() { }
 
   ngOnInit() {
-    this.factory = this.resolver.resolveComponentFactory(faComponent);
-    if (this.createInitial) this.createComponent();
+    if (this.createInitial) this.show();
   }
 
   clearSub() {
@@ -35,33 +35,30 @@ export class BusySuccessComponent implements OnInit, OnDestroy {
     }
   }
 
-  createComponent() {
-    this.container.clear();
-    this.componentRef = this.container.createComponent(this.factory);
-    this.componentRef.instance.name = "check-circle";
+  show() {
+    this.visible = true;
     if (this.killAfter) {
       this.clearSub();
       this.killSub = Observable.interval(this.killAfter).subscribe(
         () => {
-          this.destroyComponent();
+          this.visible = false;
           this.clearSub();
         }
       );
     }
   }
 
+  onBusyStarted(firstChange: boolean) {
+    this.visible = false;
+  }
+
   onBusyFinished(firstChange: boolean) {
     if (!firstChange || this.createInitial) {
-      this.createComponent();
+      this.show();
     }
   }
 
-  destroyComponent() {
-    this.componentRef && this.componentRef.destroy();
-  }
-
   ngOnDestroy() {
-    this.destroyComponent();
     this.clearSub();
   }
 

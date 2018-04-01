@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 // Third-party
-import {
-  AngularFontAwesomeModule,
-  AngularFontAwesomeComponent
-} from 'angular-font-awesome';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { BusyComponent, BusyDirective } from './busy';
 import { TimesDirective } from './times.directive';
@@ -34,7 +31,6 @@ import { BusySuccessComponent } from './busy-success';
   ],
   entryComponents: [
     BusyComponent,
-    AngularFontAwesomeComponent,
   ],
 })
 export class CoreModule { }

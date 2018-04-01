@@ -16,8 +16,6 @@
       <!-- Editable task title -->
       <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focus)="onFocus()" (focusout)="_onFocusOut()" [placeholder]="placeholder">
 
-      <!-- Show busy if the subscription is active -->
-      <app-busy-success [busy]="sub" [killAfter]="2000"></app-busy-success>
     </div>
 
     <!-- Due date -->
@@ -25,5 +23,10 @@
       {{ task.dueDate | amCalendar }}
     </div>
 
+  </div>
+
+  <!-- Show busy if the subscription is active -->
+  <div class="task-state">
+    <app-busy-success [busy]="sub" [killAfter]="1200"></app-busy-success>
   </div>
 </form>

@@ -21,6 +21,7 @@ import { BusyComponent } from './busy.component';
 export class BusyDirective implements OnChanges, OnDestroy {
 
   @Input('ngBusy') busy;
+  @Output() started: EventEmitter<boolean> = new EventEmitter();
   @Output() finished: EventEmitter<boolean> = new EventEmitter();
   private busyRef: ComponentRef<BusyComponent>;
 
@@ -40,6 +41,7 @@ export class BusyDirective implements OnChanges, OnDestroy {
         this.finished.emit(busy.isFirstChange());
       }
       else if (busy.currentValue && !this.busyRef) {
+        this.started.emit(busy.isFirstChange());
         this.createBusy();
       }
     }

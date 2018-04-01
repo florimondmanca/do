@@ -25,6 +25,7 @@ export class NewTaskRowComponent extends TaskRowComponent {
   }
 
   private create() {
+    this.clearSub();
     this.sub = this.listService.create(this.listId, this.task).subscribe(
       task => {
         this.created.emit(task);
@@ -40,7 +41,7 @@ export class NewTaskRowComponent extends TaskRowComponent {
 
   onComplete() {
     if (this.task.title) {
-      super.onComplete();
+      this.task.completed = !this.task.completed;
       this.create();
     }
   }
