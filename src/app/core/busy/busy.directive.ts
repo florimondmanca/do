@@ -1,6 +1,8 @@
 import {
   Directive,
   Input,
+  Output,
+  EventEmitter,
   TemplateRef,
   ViewContainerRef,
   ComponentRef,
@@ -8,6 +10,7 @@ import {
   Injector,
   DoCheck,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   SimpleChange,
 } from '@angular/core';
@@ -15,9 +18,10 @@ import {
 import { BusyComponent } from './busy.component';
 
 @Directive({ selector: '[ngBusy]'})
-export class BusyDirective implements OnChanges {
+export class BusyDirective implements OnChanges, OnDestroy {
 
   @Input('ngBusy') busy;
+  @Output() finished: EventEmitter<boolean> = new EventEmitter();
   private busyRef: ComponentRef<BusyComponent>;
 
   constructor(
@@ -31,25 +35,37 @@ export class BusyDirective implements OnChanges {
     const busy: SimpleChange = changes.busy;
     if (busy) {
       if (!busy.currentValue) {
-        // The busy signal turned false
-        if (this.busyRef) {
-          this.busyRef.destroy();
-          this.busyRef = null;
-        }
-        this.viewContainer.clear();
-        this.viewContainer.createEmbeddedView(this.templateRef);
+        this.destroyBusy();
+        this.createView();
+        this.finished.emit(busy.isFirstChange());
       }
       else if (busy.currentValue && !this.busyRef) {
-        // The busy signal turned true, go busy
         this.createBusy();
       }
     }
   }
 
+  createView() {
+    this.viewContainer.clear();
+    this.viewContainer.createEmbeddedView(this.templateRef);
+  }
+
   createBusy() {
+    this.viewContainer.clear();
     const busyFactory = this.cfResolver.resolveComponentFactory(BusyComponent);
     this.busyRef = this.viewContainer.createComponent(
       busyFactory, null, this.injector);
+  }
+
+  destroyBusy() {
+    if (this.busyRef) {
+      this.busyRef.destroy();
+      this.busyRef = null;
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroyBusy();
   }
 
 }

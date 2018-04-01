@@ -17,7 +17,7 @@
       <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focus)="onFocus()" (focusout)="_onFocusOut()" [placeholder]="placeholder">
 
       <!-- Show busy if the subscription is active -->
-      <span *ngBusy="sub"></span>
+      <app-busy-success [busy]="sub" [killAfter]="2000"></app-busy-success>
     </div>
 
     <!-- Due date -->
