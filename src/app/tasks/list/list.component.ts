@@ -30,6 +30,8 @@ export class ListComponent implements OnInit, OnDestroy {
           this.clearSub();
         }
       );
+    } else {
+      this.list = null;
     }
   }
 

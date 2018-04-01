@@ -2,7 +2,7 @@
   <div id="lists">
     <input id="search-bar" type="search" name="" value="">
     <ul>
-      <li *ngFor="let list of lists" [ngClass]="{'active': list.id == activeListId}" (click)="activeListId = list.id">
+      <li *ngFor="let list of lists" [ngClass]="{'active': list.id == activeListId}" (click)="selectList(list.id)">
         {{ list.title }}
       </li>
     </ul>
