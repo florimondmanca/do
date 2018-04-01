@@ -1,9 +1,10 @@
 import {
-  Component, OnInit, Input, OnDestroy,
+  Component, OnInit, Input, OnDestroy, Output, EventEmitter,
   OnChanges, SimpleChanges, SimpleChange,
 } from '@angular/core';
-import { List, Task } from '../task.model';
-import { ListService } from '../task.service';
+import { Task } from '../task.model';
+import { List } from '../list.model';
+import { ListService } from '../list.service';
 
 @Component({
   selector: 'app-list',
@@ -17,16 +18,22 @@ export class ListComponent implements OnInit, OnDestroy {
   Arr = Array;
   newTask: Task = new Task();
 
+  @Output() deleted: EventEmitter<List> = new EventEmitter();
+  @Output() found: EventEmitter<List> = new EventEmitter();
+  @Output() notFound: EventEmitter<any> = new EventEmitter();
+
   @Input() set listId(id: number) {
-    if (id) {
+    if (!(id == null || id == undefined)) {
       this.clearSub();
       this.sub = this.listService.get(id).subscribe(
         list => {
           this.list = list;
+          this.found.emit(list);
           this.clearSub();
         },
         error => {
-          console.log(error);
+          this.notFound.emit();
+          this.list = null;
           this.clearSub();
         }
       );
@@ -37,17 +44,40 @@ export class ListComponent implements OnInit, OnDestroy {
 
   constructor(private listService: ListService) { }
 
+  ngOnInit() { }
+
   clearSub() {
     if (this.sub) this.sub.unsubscribe();
     this.sub = null;
   }
 
-  onDelete(task: Task) {
-    const index = this.list.tasks.indexOf(task);
-    this.list.tasks.splice(index, 1);
+  remove(task: Task) {
+    // Find the task corresponding to the deleted task's id
+    let index: number = -1;
+    for (let i in this.list.tasks) {
+      const ind = +i;
+      if (this.list.tasks[ind].id == task.id) {
+        index = ind;
+        break;
+      }
+    }
+    if (index >= 0) {
+      this.list.tasks.splice(index, 1);
+    }
   }
 
-  ngOnInit() {
+  delete() {
+    this.clearSub();
+    this.sub = this.listService.destroy(this.list).subscribe(
+      () => {
+        this.deleted.emit(this.list);
+        this.clearSub();
+      },
+      (error) => {
+        console.log(error);
+        this.clearSub();
+      }
+    )
   }
 
   registerCreated(task: Task) {

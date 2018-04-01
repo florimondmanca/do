@@ -2,7 +2,7 @@
 @import '~sass/mixins';
 
 .page {
-  padding: 1em;
+  padding: 1em 3em;
 }
 
 #tasks {
@@ -20,4 +20,15 @@
   text-align: center;
   @include center-content;
   color: $color-medium;
+  padding: 1em;
+}
+
+.footer {
+  width: 100%;
+  .delete-list {
+    cursor: pointer;
+    width: fit-content;
+    color: $color-danger;
+    margin: auto;
+  }
 }

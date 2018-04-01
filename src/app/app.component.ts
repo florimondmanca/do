@@ -4,6 +4,14 @@ import { Location, PopStateEvent } from '@angular/common';
 
 import { Task, List, ListService } from './tasks';
 
+
+function findParent(element, id, rec?: boolean) {
+  if (element.id === id) return true;
+  if (element.parentNode) return findParent(element.parentNode, id, true);
+  return false;
+}
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,6 +33,7 @@ export class AppComponent implements OnInit {
     }),
   ]
   activeListId: number;
+  popupVisible: boolean = false;
 
   constructor(
     private listService: ListService,
@@ -37,6 +46,14 @@ export class AppComponent implements OnInit {
       (event: PopStateEvent) => this.activeListId = this.extractListId(event.url)
     );
     this.activeListId = this.extractListId(this.location.path());
+    document.body.addEventListener('click', (event) => {
+      // If click anywhere but on the list popup, hide it
+      // If clicked on the list popup, we should find the #add-list-popup
+      // element in the event's element parents.
+      if (!findParent(event.srcElement, 'add-list-popup')) {
+        this.popupVisible = false;
+      }
+    }, true);
   }
 
   extractListId(url: string) {
@@ -59,7 +76,42 @@ export class AppComponent implements OnInit {
   selectList(id: number) {
     if (this.activeListId !== id) {
       this.activeListId = id;
-      this.location.go(`l/${id}`);
     }
+  }
+
+  addList() {
+    this.popupVisible = true;
+  }
+
+  onListAdded(list: List) {
+    this.lists.push(list);
+    this.popupVisible = false;
+    this.selectList(list.id);
+  }
+
+  onListDeleted(list: List) {
+    // Find the list corresponding to the deleted list's id
+    let index: number = -1;
+    for (let i in this.lists) {
+      const ind = +i;
+      if (this.lists[ind].id == list.id) {
+        index = ind;
+        break;
+      }
+    }
+    if (index >= 0) {
+      this.lists.splice(index, 1);
+    }
+    if (this.activeListId == list.id) {
+      this.selectList(null);
+    }
+  }
+
+  onListFound(list: List) {
+    this.location.go(`l/${list.id}`);
+  }
+
+  onListNotFound() {
+    this.selectList(null);
   }
 }

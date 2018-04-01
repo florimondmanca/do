@@ -24,3 +24,17 @@ a {
     }
   }
 }
+
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  background: none;
+  &:focus {
+    outline: none;
+  }
+}

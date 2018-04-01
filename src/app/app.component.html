@@ -1,6 +1,17 @@
 <div class="page">
   <div id="lists">
-    <input id="search-bar" type="search" name="" value="">
+    <!--<input id="search-bar" type="search" name="" value="">-->
+
+    <!-- Add list button -->
+    <div class="add-list-wrapper">
+      <div class="add-list" (click)="addList()">
+        <fa name="plus-circle" class="fa"></fa> New list
+      </div>
+      <!-- Add list popup -->
+      <div class="popup-wrapper" *ngIf="popupVisible" id="add-list-popup">
+        <app-add-list-popup (added)="onListAdded($event)"></app-add-list-popup>
+      </div>
+    </div>
     <ul>
       <li *ngFor="let list of lists" [ngClass]="{'active': list.id == activeListId}" (click)="selectList(list.id)">
         {{ list.title }}
@@ -8,6 +19,6 @@
     </ul>
   </div>
   <div id="task-list">
-    <app-list [listId]="activeListId"></app-list>
+    <app-list [listId]="activeListId" (deleted)="onListDeleted($event)" (found)="onListFound($event)" (notFound)="onListNotFound($event)"></app-list>
   </div>
 </div>

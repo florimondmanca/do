@@ -51,19 +51,9 @@
     color: $color-primary;
   }
 
-  .edit-task {
+  input.edit-task {
     grid-area: title;
     display: inline-block;
-    margin: 0;
-    padding: 0;
-    border: none;
-    font-family: inherit;
-    color: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    &:focus {
-      outline: none;
-    }
   }
 }
 

@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Task } from '../task.model';
-import { ListService } from '../task.service';
 import { TaskRowComponent } from './task-row.component';
 
 
@@ -13,10 +12,12 @@ export class NewTaskRowComponent extends TaskRowComponent {
 
   @Input() listId: number;
   @Output() created: EventEmitter<Task> = new EventEmitter();
+  @ViewChild('input') input: ElementRef;
   placeholder = 'Add task…';
   deletable = false;
 
   ngOnInit() {
+    this.input.nativeElement.focus();
     super.ngOnInit();
     this.reset();
   }
@@ -27,7 +28,7 @@ export class NewTaskRowComponent extends TaskRowComponent {
 
   private create() {
     this.clearSub();
-    this.sub = this.listService.create(this.listId, this.task).subscribe(
+    this.sub = this.taskService.create(this.listId, this.task).subscribe(
       task => {
         this.created.emit(task);
         this.reset();

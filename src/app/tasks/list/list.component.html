@@ -21,15 +21,21 @@
     <ul id="tasks">
 
       <!-- Pre-existing tasks -->
-      <app-task-row *ngFor="let task of list.tasks" [task]="task" (deleted)="onDelete($event)"></app-task-row>
+      <app-task-row *ngFor="let task of list.tasks" [task]="task" (deleted)="remove($event)"></app-task-row>
 
       <!-- New task -->
       <app-new-task-row [listId]="list.id" (created)="registerCreated($event)"></app-new-task-row>
     </ul>
+
+    <div class="footer">
+      <div class="delete-list" (click)="delete()">
+        Delete list
+      </div>
+    </div>
   </div>
 </div>
 <ng-template #choose>
-  <div class="choose page">
+  <div class="choose">
     Let's get started! Select a list in the sidebar.
   </div>
 </ng-template>

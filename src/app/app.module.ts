@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 // Third-party
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-
 @NgModule({
   declarations: [
     AppComponent,
