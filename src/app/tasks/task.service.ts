@@ -84,4 +84,12 @@ export class ListService {
       tap(resp => console.log('updated task')),
     );
   }
+
+  updateCompleted(task: Task) {
+    const url = this.baseUrl + `tasks/${task.id}`;
+    const data = { completed: task.completed };
+    return this.http.patch(url, data).pipe(
+      tap(resp => console.log('changed task completed status'))
+    )
+  }
 }

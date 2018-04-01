@@ -39,7 +39,19 @@ export class TaskRowComponent implements OnInit, OnDestroy {
     );
   }
 
-  onComplete() { this.task.completed = !this.task.completed; }
+  onComplete() {
+    this.task.completed = !this.task.completed;
+    this.clearSub();
+    this.sub = this.listService.updateCompleted(this.task).subscribe(
+      resp => this.clearSub(),
+      error => {
+        console.log(error);
+        // Revert
+        this.task.completed = !this.task.completed;
+        this.clearSub();
+      }
+    );
+  }
 
   onSubmit() { this.update(); }
 
