@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit()" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
 
   <!-- Completion dot widget -->
-  <div class="dot" (click)="onComplete()">
+  <div class="dot" (click)="toggleComplete()">
     <div class="completed-mark"></div>
   </div>
 
