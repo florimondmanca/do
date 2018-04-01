@@ -14,6 +14,7 @@ export class NewTaskRowComponent extends TaskRowComponent {
   @Input() listId: number;
   @Output() created: EventEmitter<Task> = new EventEmitter();
   placeholder = 'Add task…';
+  deletable = false;
 
   ngOnInit() {
     super.ngOnInit();
@@ -47,7 +48,9 @@ export class NewTaskRowComponent extends TaskRowComponent {
   }
 
   onSubmit() {
-    this.create();
+    if (this.task.title) {
+      this.create();
+    }
   }
 
   onFocusOut() {

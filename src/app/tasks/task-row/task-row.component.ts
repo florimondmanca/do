@@ -11,8 +11,9 @@ import { DiffService } from '@app/core';
 export class TaskRowComponent implements OnInit, OnDestroy {
 
   @Input() task: Task;
+  @Output() deleted: EventEmitter<Task> = new EventEmitter();
   placeholder: string = '';
-
+  deletable: boolean = true;
   sub: any;
 
   constructor(
@@ -72,6 +73,20 @@ export class TaskRowComponent implements OnInit, OnDestroy {
 
   onFocusOut() {
     this.update();
+  }
+
+  delete() {
+    this.clearSub();
+    this.sub = this.listService.delete(this.task.id).subscribe(
+      () => {
+        this.deleted.emit(this.task);
+        this.clearSub();
+      },
+      (error) => {
+        console.log(error);
+        this.clearSub();
+      }
+    );
   }
 
 }

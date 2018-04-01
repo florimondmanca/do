@@ -40,6 +40,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this.sub = null;
   }
 
+  onDelete(task: Task) {
+    const index = this.list.tasks.indexOf(task);
+    this.list.tasks.splice(index, 1);
+  }
+
   ngOnInit() {
   }
 

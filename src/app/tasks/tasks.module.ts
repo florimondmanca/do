@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { MomentModule } from 'angular2-moment';
 
 import { ListService } from './task.service';
@@ -16,6 +17,7 @@ import { TaskRowComponent, NewTaskRowComponent } from './task-row';
     FormsModule,
     CoreModule,
     MomentModule,
+    AngularFontAwesomeModule,
   ],
   declarations: [
     ListComponent,

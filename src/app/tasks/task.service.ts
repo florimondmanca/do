@@ -85,11 +85,18 @@ export class ListService {
     );
   }
 
-  updateCompleted(task: Task) {
+  updateCompleted(task: Task): Observable<any> {
     const url = this.baseUrl + `tasks/${task.id}`;
     const data = { completed: task.completed };
     return this.http.patch(url, data).pipe(
       tap(resp => console.log('changed task completed status'))
     )
+  }
+
+  delete(taskId: number): Observable<any> {
+    const url = this.baseUrl + `tasks/${taskId}`;
+    return this.http.delete(url).pipe(
+      tap(resp => console.log('deleted task'))
+    );
   }
 }

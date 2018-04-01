@@ -21,7 +21,7 @@
     <ul id="tasks">
 
       <!-- Pre-existing tasks -->
-      <app-task-row *ngFor="let task of list.tasks" [task]="task"></app-task-row>
+      <app-task-row *ngFor="let task of list.tasks" [task]="task" (deleted)="onDelete($event)"></app-task-row>
 
       <!-- New task -->
       <app-new-task-row [listId]="list.id" (created)="registerCreated($event)"></app-new-task-row>

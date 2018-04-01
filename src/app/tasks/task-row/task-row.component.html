@@ -1,10 +1,8 @@
 <form (ngSubmit)="onSubmit()" class="task" [ngClass]="{'due': task.due, 'completed': task.completed}">
 
   <!-- Completion dot widget -->
-  <div class="task-dot">
-    <div class="dot" (click)="onComplete()">
-      <div class="completed-mark"></div>
-    </div>
+  <div class="dot" (click)="onComplete()">
+    <div class="completed-mark"></div>
   </div>
 
   <!-- Main task info -->
@@ -28,5 +26,9 @@
   <!-- Show busy if the subscription is active -->
   <div class="task-state">
     <app-busy-success [busy]="sub" [killAfter]="1200"></app-busy-success>
+  </div>
+
+  <div class="task-delete" *ngIf="deletable" (click)="delete()">
+    <fa name="trash"></fa>
   </div>
 </form>
