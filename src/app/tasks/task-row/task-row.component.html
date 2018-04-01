@@ -9,14 +9,14 @@
 
   <!-- Main task info -->
   <div class="task-body">
-    <div>
-      <!-- Priority: represent by the corresponding amount of "!" -->
-      <span class="priority"><span *ngTimes="task.priority">!</span></span>
 
-      <!-- Editable task title -->
-      <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focus)="onFocus()" (focusout)="_onFocusOut()" [placeholder]="placeholder">
+    <!-- Priority: represented by a corresponding amount of "!" -->
+    <span class="priority" *ngIf="task.priority > 0">
+      <span *ngTimes="task.priority">!</span>
+    </span>
 
-    </div>
+    <!-- Editable task title -->
+    <input class="edit-task" autocomplete="off" type="text" name="title" [(ngModel)]="task.title" (focus)="onFocus()" (focusout)="_onFocusOut()" [placeholder]="placeholder">
 
     <!-- Due date -->
     <div *ngIf="task.dueDate" class="due-date">

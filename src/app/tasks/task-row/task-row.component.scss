@@ -19,12 +19,16 @@
 
   .task-body {
     height: 2em;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
+    display: grid;
+    grid-template-areas:
+      "priority title"
+      "date date";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
   .due-date {
+    grid-area: date;
     font-size: small;
     color: $color-medium;
   }
@@ -40,10 +44,13 @@
   }
 
   .priority {
+    grid-area: priority;
+    margin-right: .3em;
     color: $color-primary;
   }
 
   .edit-task {
+    grid-area: title;
     display: inline-block;
     margin: 0;
     padding: 0;
