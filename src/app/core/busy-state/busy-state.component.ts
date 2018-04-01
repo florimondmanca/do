@@ -8,16 +8,18 @@ import {
   Observable,
   Subscription
 } from 'rxjs';
+import { BusyState } from './busy-state';
 
 @Component({
-  selector: 'app-busy-success',
-  templateUrl: './busy-success.component.html',
-  styleUrls: ['./busy-success.component.scss'],
+  selector: 'app-busy-state',
+  templateUrl: './busy-state.component.html',
+  styleUrls: ['./busy-state.component.scss'],
 })
-export class BusySuccessComponent implements OnInit, OnDestroy {
+export class BusyStateComponent implements OnInit, OnDestroy {
 
   @Input() killAfter: number;
   @Input() busy: any;
+  @Input() state: BusyState;
   @Input() createInitial: boolean = false;
   killSub: Subscription;
   visible: boolean = false;
@@ -26,6 +28,22 @@ export class BusySuccessComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.createInitial) this.show();
+  }
+
+  get iconName(): string {
+    switch(this.state) {
+      case BusyState.SUCCESS: return 'check-circle';
+      case BusyState.ERROR: return 'exclamation-circle';
+      default: return 'question';
+    }
+  }
+
+  get iconClassName(): string {
+    switch(this.state) {
+      case BusyState.SUCCESS: return 'success';
+      case BusyState.ERROR: return 'error';
+      default: return 'unknown';
+    }
   }
 
   clearSub() {

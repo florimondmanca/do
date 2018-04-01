@@ -1,3 +1,3 @@
 <ng-template [ngBusy]="busy" (started)="onBusyStarted($event)" (finished)="onBusyFinished($event)">
-  <fa name="check-circle" id="icon" *ngIf="visible"></fa>
+  <fa [name]="iconName" [ngClass]="iconClassName" *ngIf="visible"></fa>
 </ng-template>

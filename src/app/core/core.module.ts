@@ -8,14 +8,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BusyComponent, BusyDirective } from './busy';
 import { TimesDirective } from './times.directive';
 import { DiffService } from './diff.service';
-import { BusySuccessComponent } from './busy-success';
+import { BusyStateComponent } from './busy-state';
 
 @NgModule({
   declarations: [
     BusyComponent,
     BusyDirective,
     TimesDirective,
-    BusySuccessComponent,
+    BusyStateComponent,
   ],
   imports: [
     CommonModule,
@@ -27,7 +27,7 @@ import { BusySuccessComponent } from './busy-success';
   exports: [
     BusyDirective,
     TimesDirective,
-    BusySuccessComponent,
+    BusyStateComponent,
   ],
   entryComponents: [
     BusyComponent,

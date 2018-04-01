@@ -31,16 +31,13 @@ export class NewTaskRowComponent extends TaskRowComponent {
       task => {
         this.created.emit(task);
         this.reset();
-        super.clearSub();
+        this.onCallSuccess();
       },
-      error => {
-        console.log(error);
-        this.clearSub();
-      }
+      this.onCallError
     );
   }
 
-  onComplete() {
+  toggleComplete() {
     if (this.task.title) {
       this.task.completed = !this.task.completed;
       this.create();

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../task.model';
 import { ListService } from '../task.service';
-import { DiffService } from '@app/core';
+import { DiffService, BusyState } from '@app/core';
 
 @Component({
   selector: 'app-task-row',
@@ -15,6 +15,7 @@ export class TaskRowComponent implements OnInit, OnDestroy {
   placeholder: string = '';
   deletable: boolean = true;
   sub: any;
+  subState: BusyState;
 
   constructor(
     protected listService: ListService,
@@ -33,28 +34,46 @@ export class TaskRowComponent implements OnInit, OnDestroy {
     this.sub = null;
   }
 
+  onCallSuccess() {
+    this.subState = BusyState.SUCCESS;
+    this.clearSub();
+  }
+
+  onCallError(error: any) {
+    console.log(error);
+    this.subState = BusyState.ERROR;
+    this.clearSub();
+  }
+
   private update() {
     this.clearSub();
     this.sub = this.listService.update(this.task).subscribe(
-      resp => this.clearSub(),
-      error => {
-        console.log(error);
-        this.clearSub();
-      },
+      resp => this.onCallSuccess(),
+      this.onCallError
     );
   }
 
-  onComplete() {
+  toggleComplete() {
     this.task.completed = !this.task.completed;
     this.clearSub();
     this.sub = this.listService.updateCompleted(this.task).subscribe(
-      resp => this.clearSub(),
+      resp => this.onCallSuccess(),
       error => {
-        console.log(error);
         // Revert
         this.task.completed = !this.task.completed;
-        this.clearSub();
+        this.onCallError(error);
       }
+    );
+  }
+
+  delete() {
+    this.clearSub();
+    this.sub = this.listService.delete(this.task.id).subscribe(
+      () => {
+        this.deleted.emit(this.task);
+        this.onCallSuccess();
+      },
+      this.onCallError
     );
   }
 
@@ -73,20 +92,6 @@ export class TaskRowComponent implements OnInit, OnDestroy {
 
   onFocusOut() {
     this.update();
-  }
-
-  delete() {
-    this.clearSub();
-    this.sub = this.listService.delete(this.task.id).subscribe(
-      () => {
-        this.deleted.emit(this.task);
-        this.clearSub();
-      },
-      (error) => {
-        console.log(error);
-        this.clearSub();
-      }
-    );
   }
 
 }

@@ -25,7 +25,7 @@
 
   <!-- Show busy if the subscription is active -->
   <div class="task-state">
-    <app-busy-success [busy]="sub" [killAfter]="1200"></app-busy-success>
+    <app-busy-state [busy]="sub" [state]="subState" [killAfter]="1200"></app-busy-state>
   </div>
 
   <div class="task-delete" *ngIf="deletable" (click)="delete()">

@@ -1,0 +1,11 @@
+@import '~sass/variables';
+
+.success {
+  color: $color-success;
+}
+.error {
+  color: $color-danger;
+}
+.unknown {
+  color: $color-medium;
+}
