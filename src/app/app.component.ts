@@ -20,18 +20,7 @@ function findParent(element, id, rec?: boolean) {
 export class AppComponent implements OnInit {
 
   tasks: Task[];
-  lists: List[] = [
-    new List({
-      id: 1,
-      title: 'Shopping',
-      tasks: [],
-    }),
-    new List({
-      id: 2,
-      title: 'Trips',
-      tasks: [],
-    }),
-  ]
+  lists: List[];
   activeListId: number;
   popupVisible: boolean = false;
 
