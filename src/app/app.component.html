@@ -26,6 +26,6 @@
 
   <!-- Main page content (list of tasks) -->
   <div id="task-list">
-    <app-list [listId]="activeListId" (deleted)="onListDeleted($event)" (found)="onListFound($event)" (notFound)="onListNotFound($event)"></app-list>
+    <app-list [listId]="activeListId" (deleted)="onListDeleted($event)" (found)="onListFound($event)" (notFound)="onListNotFound()"></app-list>
   </div>
 </div>
