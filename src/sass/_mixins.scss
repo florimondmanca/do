@@ -1,3 +1,5 @@
+@import 'variables';
+
 @mixin list-no-style() {
   list-style-type: none;
   margin: 0;
@@ -13,4 +15,19 @@
   flex-flow: column;
   justify-content: center;
   align-items: center;
+}
+
+@mixin link() {
+  cursor: pointer;
+  &:hover {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -.2em;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid;
+    }
+  }
 }

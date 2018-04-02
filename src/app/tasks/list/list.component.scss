@@ -28,7 +28,7 @@
 .footer {
   width: 100%;
   .delete-list {
-    cursor: pointer;
+    @include link;
     width: fit-content;
     color: $color-danger;
     margin: auto;
