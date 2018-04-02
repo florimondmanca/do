@@ -24,7 +24,3 @@ As an alternative, you may start the Express server:
 $ npm run build
 $ npm start
 ```
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
