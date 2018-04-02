@@ -29,7 +29,7 @@ export class TaskRowComponent implements OnInit, OnDestroy {
     this.clearSub();
   }
 
-  protected clearSub() {
+  clearSub() {
     if (this.sub) this.sub.unsubscribe();
     this.sub = null;
   }

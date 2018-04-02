@@ -68,6 +68,11 @@ export class AppComponent implements OnInit {
     }
   }
 
+  home() {
+    this.selectList(null);
+    this.location.go('');
+  }
+
   addList() {
     this.popupVisible = true;
   }
@@ -92,8 +97,7 @@ export class AppComponent implements OnInit {
       this.lists.splice(index, 1);
     }
     if (this.activeListId == list.id) {
-      this.selectList(null);
-      this.location.go('');
+      this.home();
     }
   }
 

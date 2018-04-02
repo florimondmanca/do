@@ -1,15 +1,8 @@
 <div *ngIf="list; else choose">
-  <div *ngBusy="sub" class="page">
+  <div class="page">
 
     <!-- Header -->
-    <div class="header">
-      <div>
-        <h2>{{ list.title }}</h2>
-      </div>
-      <div>
-        <button type="button" name="add-task">+</button>
-      </div>
-    </div>
+    <h2>{{ list.title }}</h2>
     <div class="header">
       <p>{{ list.completedCount }} completed</p>
       <div>
@@ -36,6 +29,7 @@
 </div>
 <ng-template #choose>
   <div class="choose">
-    Let's get started! Select a list in the sidebar.
+    <p><strong>Let's get started!</strong></p>
+    <p>Select a list in the sidebar or click "New list".</p>
   </div>
 </ng-template>

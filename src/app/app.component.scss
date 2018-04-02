@@ -3,17 +3,21 @@
 $padding-h: 1em;
 
 .page {
-  margin: 0;
-  padding: 0;
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr;
   height: 100vh;
+  max-width: 50em;
+  padding: 0;
+  margin: 0 auto;
+  grid-template-areas: "brand main" "sidebar main" ". main";
+  grid-template-columns: 12em 1fr;
+  grid-template-rows: auto auto 1fr;
 }
 
-// #search-bar {
-//   margin: 1em;
-// }
+h1 {
+  grid-area: brand;
+  text-align: center;
+  cursor: pointer;
+}
 
 .add-list-wrapper {
   position: relative;
@@ -21,9 +25,9 @@ $padding-h: 1em;
 
 .add-list {
   width: fit-content;
-  margin: auto;
   text-align: center;
-  margin: 1em auto;
+  margin: 0 auto;
+  padding: 1em 0;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -31,16 +35,13 @@ $padding-h: 1em;
 .popup-wrapper {
   position: absolute;
   top: 0;
-  left: 10%;
-  width: 80%;
+  left: 0;
+  width: 100%;
   margin: auto;
 }
 
-#lists {
-  background: $color-darker;
-  color: white;
-  height: 100%;
-  min-width: 12em;
+#sidebar {
+  grid-area: sidebar;
   position: relative;
 
   ul {
@@ -49,14 +50,21 @@ $padding-h: 1em;
     li {
       cursor: pointer;
       padding: 0.7em $padding-h;
+      border-top: 1px solid $color-lighter;
 
       &.active {
         background: $color-primary !important;
       }
 
       &:hover {
-        background: $color-medium;
+        background: $color-lightest;
       }
     }
   }
+}
+
+#task-list {
+  grid-area: main;
+  padding: 0;
+  margin: 0;
 }

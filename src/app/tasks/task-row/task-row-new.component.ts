@@ -10,7 +10,12 @@ import { TaskRowComponent } from './task-row.component';
 })
 export class NewTaskRowComponent extends TaskRowComponent {
 
-  @Input() listId: number;
+  private listId: number;
+
+  @Input('listId') set _listId(value: number) {
+    this.ngOnInit();
+    this.listId = value;
+  }
   @Output() created: EventEmitter<Task> = new EventEmitter();
   @ViewChild('input') input: ElementRef;
   placeholder = 'Add task…';
@@ -34,7 +39,7 @@ export class NewTaskRowComponent extends TaskRowComponent {
         this.reset();
         this.onCallSuccess();
       },
-      this.onCallError
+      this.onCallError,
     );
   }
 

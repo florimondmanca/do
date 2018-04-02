@@ -1,23 +1,30 @@
 <div class="page">
-  <div id="lists">
-    <!--<input id="search-bar" type="search" name="" value="">-->
+  <h1 (click)="home()">Do</h1>
+
+  <div id="sidebar">
 
     <!-- Add list button -->
     <div class="add-list-wrapper">
       <div class="add-list" (click)="addList()">
         <fa name="plus-circle" class="fa"></fa> New list
       </div>
+
       <!-- Add list popup -->
       <div class="popup-wrapper" *ngIf="popupVisible" id="add-list-popup">
         <app-add-list-popup (added)="onListAdded($event)"></app-add-list-popup>
       </div>
     </div>
-    <ul>
+
+    <!-- Available lists -->
+    <ul class="list-of-lists">
       <li *ngFor="let list of lists" [ngClass]="{'active': list.id == activeListId}" (click)="selectList(list.id)">
         {{ list.title }}
       </li>
     </ul>
+
   </div>
+
+  <!-- Main page content (list of tasks) -->
   <div id="task-list">
     <app-list [listId]="activeListId" (deleted)="onListDeleted($event)" (found)="onListFound($event)" (notFound)="onListNotFound($event)"></app-list>
   </div>

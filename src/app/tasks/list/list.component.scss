@@ -2,7 +2,8 @@
 @import '~sass/mixins';
 
 .page {
-  padding: 1em 3em;
+  padding: 1em 2em;
+  box-sizing: border-box;
 }
 
 #tasks {
@@ -21,6 +22,7 @@
   @include center-content;
   color: $color-medium;
   padding: 1em;
+  box-sizing: border-box;
 }
 
 .footer {
