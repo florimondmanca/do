@@ -104,6 +104,7 @@ export class AppComponent implements OnInit {
     }
     if (this.activeListId == list.id) {
       this.selectList(null);
+      this.location.go('');
     }
   }
 

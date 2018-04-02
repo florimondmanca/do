@@ -2,8 +2,8 @@
 
 .popup {
   width: 100%;
-  background: $color-secondary;
-  color: white;
+  background: white;
+  color: $color-text;
   border-radius: 4px;
   padding: 1em 1em;
   box-sizing: border-box;
@@ -11,9 +11,6 @@
   input {
     width: 100%;
     display: inline-block;
-    &::placeholder {
-      color: lighten($color-secondary, 20%);
-    }
   }
 
   box-shadow: 0 10px 8px rgba(0, 0, 0, .1);
